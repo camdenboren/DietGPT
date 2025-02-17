@@ -40,6 +40,8 @@
               rustc
               pkg-config
               gobject-introspection
+              rust-analyzer
+              rustfmt
               build
               format
             ];

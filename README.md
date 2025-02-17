@@ -12,6 +12,34 @@ This project is on the backburner until I release [alc-calc]
 - [Vue.js] is used for the frontend
 - [Tauri] is used for the backend on non-web targets
 
+## Setup
+
+- Enter the environment
+
+  ```shell
+  nix develop
+  ```
+
+- Install deps
+
+  ```shell
+  npm install
+  ```
+
+- Build
+
+  - Frontend
+
+    ```shell
+    npm run dev
+    ```
+
+  - App
+
+    ```shell
+    cargo-tauri dev
+    ```
+
 ## Vue Boilerplate
 
 ### Recommended IDE Setup
