@@ -35,9 +35,33 @@
             packages = with pkgs; [
               bashInteractive
               nodejs
+              cargo
+              cargo-tauri
+              rustc
+              pkg-config
+              gobject-introspection
               build
               format
             ];
+
+            buildInputs = with pkgs; [
+              at-spi2-atk
+              atkmm
+              cairo
+              gdk-pixbuf
+              glib
+              gtk3
+              harfbuzz
+              librsvg
+              libsoup_3
+              pango
+              webkitgtk_4_1
+              openssl
+            ];
+
+            env = {
+              WEBKIT_DISABLE_DMABUF_RENDERER = 1;
+            };
 
             shellHook = import ./nix/shellHook.nix;
           };
