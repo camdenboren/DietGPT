@@ -46,20 +46,24 @@
               format
             ];
 
-            buildInputs = with pkgs; [
-              at-spi2-atk
-              atkmm
-              cairo
-              gdk-pixbuf
-              glib
-              gtk3
-              harfbuzz
-              librsvg
-              libsoup_3
-              pango
-              webkitgtk_4_1
-              openssl
-            ];
+            buildInputs =
+              with pkgs;
+              [
+                at-spi2-atk
+                atkmm
+                cairo
+                gdk-pixbuf
+                glib
+                gtk3
+                harfbuzz
+                librsvg
+                libsoup_3
+                pango
+                openssl
+              ]
+              ++ lib.optionals stdenv.hostPlatform.isLinux [
+                webkitgtk_4_1
+              ];
 
             env = {
               WEBKIT_DISABLE_DMABUF_RENDERER = 1;
