@@ -1,33 +1,45 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
-import type { SidebarMenuButtonProps } from './SidebarMenuButtonChild.vue'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { computed } from 'vue'
-import SidebarMenuButtonChild from './SidebarMenuButtonChild.vue'
-import { useSidebar } from './utils'
+import type { Component } from "vue";
+import type { SidebarMenuButtonProps } from "./SidebarMenuButtonChild.vue";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { computed } from "vue";
+import SidebarMenuButtonChild from "./SidebarMenuButtonChild.vue";
+import { useSidebar } from "./utils";
 
 defineOptions({
   inheritAttrs: false,
-})
+});
 
-const props = withDefaults(defineProps<SidebarMenuButtonProps & {
-  tooltip?: string | Component
-}>(), {
-  as: 'button',
-  variant: 'default',
-  size: 'default',
-})
+const props = withDefaults(
+  defineProps<
+    SidebarMenuButtonProps & {
+      tooltip?: string | Component;
+    }
+  >(),
+  {
+    as: "button",
+    variant: "default",
+    size: "default",
+  },
+);
 
-const { isMobile, state } = useSidebar()
+const { isMobile, state } = useSidebar();
 
 const delegatedProps = computed(() => {
-  const { tooltip, ...delegated } = props
-  return delegated
-})
+  const { tooltip, ...delegated } = props;
+  return delegated;
+});
 </script>
 
 <template>
-  <SidebarMenuButtonChild v-if="!tooltip" v-bind="{ ...delegatedProps, ...$attrs }">
+  <SidebarMenuButtonChild
+    v-if="!tooltip"
+    v-bind="{ ...delegatedProps, ...$attrs }"
+  >
     <slot />
   </SidebarMenuButtonChild>
 
