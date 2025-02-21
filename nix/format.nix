@@ -12,6 +12,9 @@ pkgs.writeShellScriptBin "format" ''
   }
   trap 'failed' ERR
 
+  echo -e "\033[1;33mrustfmt...\033[0m"
+  rustfmt src-tauri/**/*.rs src-tauri/*.rs | box
+
   echo -e "\n\033[1;33mnix...\033[0m"
   ${pkgs.nixfmt-rfc-style}/bin/nixfmt flake.nix **/*.nix | box
 
@@ -19,7 +22,8 @@ pkgs.writeShellScriptBin "format" ''
   ${pkgs.nodePackages.prettier}/bin/prettier \
   --plugin=${pkgs.nodePackages.prettier-plugin-toml}\
   /lib/node_modules/prettier-plugin-toml/lib/index.cjs \
-  --write **/*.md **/*.vue **/*.ts **/*.json **/*.html **/*.css | box
+  --write "**/*.md" "**/*.vue" "**/*.ts" "**/*.json" "**/*.toml" \
+  "!src-tauri/{gen,target}" "**/*.html" "**/*.css" | box
 
   echo -e "\n\033[1;32mFormat succeeded.\033[0m"
 ''

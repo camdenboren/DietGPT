@@ -9,12 +9,30 @@ import CalorieCounting from "./views/CalorieCounting.vue";
 import Usage from "./views/Usage.vue";
 import Project from "./views/Project.vue";
 import NotFound from "./views/NotFound.vue";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+} from "./components/ui/breadcrumb";
+import { Separator } from "./components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "./components/ui/sidebar";
 
-const routes: { [index: string]: any } = {
-  "/": Usage,
-  "/meal-planning": MealPlanning,
+const routes: { [index: string]: Component } = {
+  "/usage": Usage,
+  "/": MealPlanning,
   "/calorie-counting": CalorieCounting,
   "/project": Project,
+};
+
+const routeNames: { [index: string]: string } = {
+  "/usage": "Usage",
+  "/": "Meal Planning",
+  "/calorie-counting": "Calorie Counting",
+  "/project": "Project",
 };
 
 const currentPath = ref(window.location.hash);
@@ -26,11 +44,30 @@ window.addEventListener("hashchange", () => {
 const currentView = computed(() => {
   return routes[currentPath.value.slice(1) || "/"] || NotFound;
 });
+
+const currentName = computed(() => {
+  return routeNames[currentPath.value.slice(1) || "/"] || "404";
+});
 </script>
 
 <template>
-  <component :is="currentView" />
   <div class="wrapper">
-    <Sidebar />
+    <SidebarProvider>
+      <Sidebar />
+      <SidebarInset>
+        <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger class="-ml-1" />
+          <Separator orientation="vertical" class="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem class="hidden md:block">
+                <span>{{ currentName }}</span>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </header>
+        <component :is="currentView" />
+      </SidebarInset>
+    </SidebarProvider>
   </div>
 </template>
